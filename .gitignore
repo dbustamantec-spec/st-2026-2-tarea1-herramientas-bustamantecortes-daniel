@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+.Rhistory
+.RData
+.Rproj.user/
+=======
+.Rhistory
+.RData
+.Rproj.user/
+>>>>>>> b6d3c3dc11b30da96ff77db82b26e25579467fed
+*.Rproj
