@@ -1,15 +1,13 @@
 # Prueba de Ljung-Box
-ljung_box <- function(r, T_obs, m, p = 0) {
-  # Asegurar tipos numéricos para evitar errores de argumentos
-  T_obs <- as.numeric(T_obs)
+ljung_box <- function(r, T, m, p = 0) {
+  T <- as.numeric(T)
   m <- as.numeric(m)
   p <- as.numeric(p)
   
   h <- 1:m
   r_m <- r[1:m]
   
-  # Fórmula exacta del estadístico Q_m
-  Q_m <- T_obs * (T_obs + 2) * sum((r_m^2) / (T_obs - h))
+  Q_m <- T * (T + 2) * sum((r_m^2) / (T - h))
   df <- m - p
   
   val_critico <- qchisq(0.95, df)
@@ -54,15 +52,14 @@ durbin_watson <- function(e) {
   den <- sum(e^2)
   d <- num / den
   
-  # Como los valores críticos de DW dependen de tablas externas (T y variables),
+  # Como los valores críticos de DW dependen de tablas externas (T y variables), 
   # se devuelve NA en las distribuciones según "cuando la distribución lo permite".
-    return(list(
+  return(list(
     estadistico = d,
     grados_libertad = NA,
     valor_critico_5 = NA,
     p_valor = NA))}
 
-  
 
 medidas <- function(y, yhat, mae_ingenuo = NULL) {
   stopifnot(
@@ -116,19 +113,16 @@ validar_errores <- function(e, p = 0, m = NULL) {
   r_e <- acf(e, lag.max = m, plot = FALSE)$acf[-1, 1, 1]
   lb_test <- ljung_box(r = r_e, T = N, m = m, p = p)
   dw_test <- durbin_watson(e)
-
-  print(g_tiempo / g_corr)
+  
+  grafico_ <- g_tiempo / g_corr
+  print(grafico_)
  
   return(list(
     N_errores = N,
     t_test = t_test,
     ljung_box = lb_test,
     jarque_bera = jb_test,
-    durbin_watson = dw_test
+    durbin_watson = dw_test,
+    grafico = grafico_
   ))
 }
-  return(list(
-    estadistico = d,
-    grados_libertad = NA,
-    valor_critico_5 = NA,
-    p_valor = NA))}
