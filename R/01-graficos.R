@@ -73,24 +73,4 @@ correlograma <- function(datos, m = NULL) {
 
 }
 
-# Bloque de verificación con Nottem
-y_vec <- leer_serie(nottem, fuente = "", unidad = "")
-y_vec <- y_vec$y 
-n <- length(y_vec)
-m <- min(24, floor(n / 4))
-media <- mean(y_vec)
-acfs <- numeric(m)
-denominador <- sum((y_vec - media)^2)
-ci <- 0.95
-climo <- qnorm((1 + ci)/2) / sqrt(n)
-banda_inf <- -climo
-banda_sup <- climo
-
-for (j in 1:m) {
-  numerador <- 0
-  for (i in (j+1):n) {
-    numerador <- numerador + (y_vec[i] - media) * (y_vec[i-j] - media)
-  }
-  acfs[j] <- numerador / denominador
-}
 
