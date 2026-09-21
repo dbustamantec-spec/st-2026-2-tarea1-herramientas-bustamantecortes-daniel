@@ -94,7 +94,3 @@ for (j in 1:m) {
   acfs[j] <- numerador / denominador
 }
 
-acf_r <- acf(y_vec, plot = FALSE, lag.max = m)$acf[-1]
-max_diferencia <- max(abs(acfs - acf_r))
-cat("Máxima diferencia absoluta:", max_diferencia)
-# La diferencia es menor a 10^(-12)
