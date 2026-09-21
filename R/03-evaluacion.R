@@ -54,8 +54,79 @@ durbin_watson <- function(e) {
   den <- sum(e^2)
   d <- num / den
   
-  # Como los valores críticos de DW dependen de tablas externas (T y variables), 
+  # Como los valores críticos de DW dependen de tablas externas (T y variables),
   # se devuelve NA en las distribuciones según "cuando la distribución lo permite".
+    return(list(
+    estadistico = d,
+    grados_libertad = NA,
+    valor_critico_5 = NA,
+    p_valor = NA))}
+
+  
+
+medidas <- function(y, yhat, mae_ingenuo = NULL) {
+  stopifnot(
+    "y y yhat deben tener la misma longitud" = length(y) == length(yhat)
+  )
+  idx_validos <- !is.na(yhat) & !is.na(y)
+  e <- y[idx_validos] - yhat[idx_validos]
+  y_val <- y[idx_validos]
+  mse <- mean(e^2)
+  mad <- mean(abs(e))
+  mape <- mean(abs(e / y_val)) * 100
+  
+  resultados <- c(MSE = mse, MAD = mad, MAPE = mape)
+  if (!is.null(mae_ingenuo)) {
+    mase <- mad / mae_ingenuo
+    resultados <- c(resultados, MASE = mase)
+  }
+  
+  return(resultados)
+}
+
+validar_errores <- function(e, p = 0, m = NULL) {
+  library(ggplot2)
+  library(patchwork)
+  e <- na.omit(as.numeric(e))
+  N <- length(e)
+  
+  if (N < 20) {
+    warning("Jarque-Bera es una prueba asintótica. Con menos de 20 errores, la decisión se debe tomar con precaución.")
+  }
+  
+  if (is.null(m)) {
+    m <- min(24, floor(N / 4))
+  }
+  
+  # Gráfico de errores en el tiempo
+  df_e <- data.frame(t = 1:N, error = e)
+  g_tiempo <- ggplot(df_e, aes(x = t, y = error)) +
+    geom_line(color = "steelblue") +
+    geom_point(size = 1) +
+    geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+    theme_minimal() +
+    labs(title = "Errores de pronóstico a un paso", x = "Tiempo", y = "Error")
+  
+  # Correlograma 
+  g_corr <- correlograma(e, m = m)
+  
+  # Pruebas de hipótesis 
+  t_test <- t.test(e, mu = 0)
+  jb_test <- jarque_bera(e)
+  r_e <- acf(e, lag.max = m, plot = FALSE)$acf[-1, 1, 1]
+  lb_test <- ljung_box(r = r_e, T = N, m = m, p = p)
+  dw_test <- durbin_watson(e)
+
+  print(g_tiempo / g_corr)
+ 
+  return(list(
+    N_errores = N,
+    t_test = t_test,
+    ljung_box = lb_test,
+    jarque_bera = jb_test,
+    durbin_watson = dw_test
+  ))
+}
   return(list(
     estadistico = d,
     grados_libertad = NA,
