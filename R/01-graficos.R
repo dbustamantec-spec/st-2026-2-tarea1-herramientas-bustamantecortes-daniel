@@ -16,11 +16,6 @@ graficar_serie <- function(datos, titulo) {
   return(g)
 }
 
-graficar_serie(datos = leer_serie(x = nottem, unidad = "Temperatura", 
-                                  fuente = "quien sabe"), titulo = "hola")
-not <- leer_serie(x = nottem, unidad = "Temperatura", fuente = "quien sabe")
-not$y$n.used
-length(not$t)
 
 # Correlogramas
 correlograma <- function(datos, m = NULL) {
