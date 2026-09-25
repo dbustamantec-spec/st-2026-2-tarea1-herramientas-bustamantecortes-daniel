@@ -122,22 +122,22 @@ ejecutar_ejemplo <- function(id, nombre, x, fuente, unidad, metodo, p_lb, rejill
 resumen <- list()
 
 resumen[[1]] <- ejecutar_ejemplo(1, "Nile", Nile, 
-                                 "Durbin and Koopman (2001)", "Pies", "media", p_lb = 1)
+                                 "Durbin and Koopman (2001)", "Nivel", "media", p_lb = 1)
 
 resumen[[2]] <- ejecutar_ejemplo(2, "discoveries", discoveries, 
                                  "World Almanac 1975", "Descubrimientos", "mm", p_lb = 0, rejilla = 2:12)
 
 resumen[[3]] <- ejecutar_ejemplo(3, "Nile", Nile, 
-                                 "Durbin and Koopman (2001)", "10^8 m^3", "ses", p_lb = 1, rejilla = seq(0.02, 0.98, by = 0.02))
+                                 "Durbin and Koopman (2001)", "Nivel", "ses", p_lb = 1, rejilla = seq(0.02, 0.98, by = 0.02))
 
 resumen[[4]] <- ejecutar_ejemplo(4, "airmiles",airmiles, 
                                  "FAA Statistical Handbook", "Millas", "dmm", p_lb = 0, rejilla = 2:12)
 
 resumen[[5]] <- ejecutar_ejemplo(5, "austres", austres, 
-                                 "Brockwell and Davis (1996)", "Millas", "lineal", p_lb = 2)
+                                 "Brockwell and Davis (1996)", "Miles de residentes", "lineal", p_lb = 2)
 
 resumen[[6]] <- ejecutar_ejemplo(6, "austres", austres, 
-                                 "Brockwell and Davis (1996)", "Millas", "cuadratica", p_lb = 3)
+                                 "Brockwell and Davis (1996)", "Miles de residentes", "cuadratica", p_lb = 3)
 
 resumen[[7]] <- ejecutar_ejemplo(7, "airmiles", airmiles, 
                                  "FAA Statistical Handbook", "Millas", "exponencial", p_lb = 2)
@@ -147,8 +147,8 @@ resumen[[8]] <- ejecutar_ejemplo(8, "WWWusage", WWWusage,
                                  rejilla = expand.grid(alpha = seq(0.05, 0.95, by=0.05), beta = seq(0.05, 0.95, by=0.05)))
 
 # Contraejemplo
-resumen[[9]] <- ejecutar_ejemplo(9, "austres", datasets::sunspot.year, 
-                                 "Brockwell and Davis (1996)", "Millas", "media", p_lb = 1)
+resumen[[9]] <- ejecutar_ejemplo(9, "austres", austres, 
+                                 "Brockwell and Davis (1996)", "Miles de residentes", "media", p_lb = 1)
 
 # RESUMEN FINAL Y VERIFICACIÓN DE ACF
 df_resumen <- do.call(rbind, resumen)
