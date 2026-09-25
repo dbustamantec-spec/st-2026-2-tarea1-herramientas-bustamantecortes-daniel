@@ -20,7 +20,7 @@ graficar_serie <- function(datos, titulo) {
 # Correlogramas
 correlograma <- function(datos, m = NULL) {
   library(patchwork)
-  library(tidyverse)
+  library(ggplot2)
   y_vec <- if(is.data.frame(datos)) datos$y else as.numeric(datos)
   n <- length(y_vec)
   
