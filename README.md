@@ -147,14 +147,14 @@ etiquetar la versión `v1.0`.
 
 | Ejemplo | Serie | Método y parámetros | MASE método | MASE ingenuo |
 |---:|---|---|---:|---:|
-| 1 | `LakeHuron` | Media simple | 0.8429 | 0.8355 |
+| 1 | `Nile` | Media simple | 0.8429 | 0.8355 |
 | 2 | `discoveries` | Media móvil, `k` óptimo en `9` | 0.5878 | 1.1365 |
 | 3 | `Nile` | SES, `alpha` óptimo en `0.24` | 0.8062 | 0.8355 |
 | 4 | `airmiles` | Doble media móvil, `k` óptimo en `2` | 1.6179 | 4.4959 |
 | 5 | `austres` | Tendencia lineal | 3.9735 | 6.091 |
 | 6 | `austres` | Tendencia cuadrática | 1.4549 | 6.091 |
 | 7 | `airmiles` | Tendencia exponencial, con corrección de sesgo | 20.8072 | 4.4959 |
-| 8 | `LakeHuron` | Holt, `(alpha, beta)` óptimos en la rejilla `(0.95,0.95)` | 1.8903 | 7.6247 |
+| 8 | `WWWusage` | Holt, `(alpha, beta)` óptimos en la rejilla `(0.95,0.95)` | 1.8903 | 7.6247 |
 
 El contraejemplo adicional usa `austres` con media simple: la media histórica
 no representa bien una serie con crecimiento sostenido y debe interpretarse como
