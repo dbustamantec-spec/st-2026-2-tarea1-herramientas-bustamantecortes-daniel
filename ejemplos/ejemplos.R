@@ -2,10 +2,10 @@ options(stringsAsFactors = FALSE)
 set.seed(20260921)
 
 # Cargar las funciones del repositorio
-source("../R/00-lectura.R")
-source("../R/01-graficos.R")
-source("../R/02-metodos.R")
-source("../R/03-evaluacion.R")
+source("R/00-lectura.R")
+source("R/01-graficos.R")
+source("R/02-metodos.R")
+source("R/03-evaluacion.R")
 
 dir.create("figs", showWarnings = FALSE, recursive = TRUE)
 
@@ -28,7 +28,7 @@ graficar_optimizacion <- function(opt, metodo, id) {
   }
   
   g <- g + theme_minimal()
-  ggsave(sprintf("../figs/e%d_optimizacion.png", id), g, width = 6, height = 4)
+  ggsave(sprintf("figs/e%d_optimizacion.png", id), g, width = 6, height = 4)
 }
 
 ejecutar_ejemplo <- function(id, nombre, x, fuente, unidad, metodo, p_lb, rejilla = NULL) {
@@ -44,8 +44,8 @@ ejecutar_ejemplo <- function(id, nombre, x, fuente, unidad, metodo, p_lb, rejill
   m_serie <- min(24, floor(T_total / 4))
   g_corr <- correlograma(y, m = m_serie)
   
-  ggsave(sprintf("../figs/e%d_serie.png", id), g_serie, width = 8, height = 4)
-  ggsave(sprintf("../figs/e%d_corr_serie.png", id), g_corr, width = 8, height = 6)
+  ggsave(sprintf("figs/e%d_serie.png", id), g_serie, width = 8, height = 4)
+  ggsave(sprintf("figs/e%d_corr_serie.png", id), g_corr, width = 8, height = 6)
   
   cat("\nLjung-Box sobre la serie original (p=0):\n")
   print(ljung_box(acf(y, lag.max=m_serie, plot=FALSE)$acf[-1,1,1], T_total, m_serie, 0))
@@ -109,7 +109,7 @@ ejecutar_ejemplo <- function(id, nombre, x, fuente, unidad, metodo, p_lb, rejill
   
   # Guardar gráficos de errores
   # Guardar gráficos de errores forzando el fondo blanco
-  ggsave(sprintf("../figs/e%d_errores_val.png", id), val_err$grafico, width = 8, height = 6, bg = "white")
+  ggsave(sprintf("figs/e%d_errores_val.png", id), val_err$grafico, width = 8, height = 6, bg = "white")
   
   # G. Retornar métricas clave para el resumen
   return(data.frame(
@@ -154,7 +154,7 @@ resumen[[9]] <- ejecutar_ejemplo(9, "austres", austres,
 df_resumen <- do.call(rbind, resumen)
 cat("RESUMEN DE MASE (MÉTODO VS INGENUO)\n")
 print(df_resumen, row.names = FALSE)
-write.csv(df_resumen, "../figs/resumen_ejemplos.csv", row.names = FALSE)
+write.csv(df_resumen, "figs/resumen_ejemplos.csv", row.names = FALSE)
 
 cat("VERIFICACIÓN ACF MANUAL vs acf() DE R\n")
 series_test <- list(Nile, discoveries, airmiles, austres, WWWusage)
